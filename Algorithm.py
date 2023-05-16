@@ -110,7 +110,6 @@ def check_rew(board, r):
 def minmax(board, my_turn, new_turn, action_list, deep):
     mm = []
     nt = []
-    nn = []
     r = 1 if my_turn == new_turn else -1
     for i in action_list:
         b = board.copy()
@@ -122,18 +121,8 @@ def minmax(board, my_turn, new_turn, action_list, deep):
         mm.append(cr)
         nt.append(i)
 
-    if my_turn == new_turn:
-        mx = max(mm)
-        for j in range(len(mm)):
-            if mm[j] == mx:
-                nn.append(nt[j])
-        return mx, nn
-    else:
-        mx = min(mm)
-        for j in range(len(mm)):
-            if mm[j] == mx:
-                nn.append(nt[j])
-        return mx, nn
+    mx = max(mm) if my_turn == new_turn else min(mm)
+    return mx, [nt[j] for j in range(len(mm)) if mm[j] == mx]
 
 
 class Random:
